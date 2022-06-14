@@ -1,0 +1,18 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: clean-metadata
+upstream:
+  type: git
+  git:
+    repo: https://github.com/MundraAnkur/krm-func-examples
+    directory: /clean-metadata
+    ref: main
+  updateStrategy: resource-merge
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/MundraAnkur/krm-func-examples
+    directory: /clean-metadata
+    ref: main
+    commit: 971e5cda4931ffa712c5987fb1f9d2a2be23d22f
