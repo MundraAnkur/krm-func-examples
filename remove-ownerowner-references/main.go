@@ -2,23 +2,22 @@ package main
 
 import (
 	"os"
-
 	"github.com/GoogleContainerTools/kpt-functions-sdk/go/fn"
 )
 
+
 // This is the main logic. rl is the input `ResourceList` which has the `FunctionConfig` and `Items` fields.
 // You can modify the `Items` and add result information to `rl.Result`.
-func Run(rl *fn.ResourceList) (bool, error) {
-	// Your code
-
+func Run(rl *fn.ResourceList) (bool,error) {
+	
 	for _, kubeObject := range rl.Items {
-		if kubeObject.IsGVK("apps", "v1", "Deployment") {
-			kubeObject.SetLabel("tier", "mysql")
-		}
+		//remove owner references
+		kubeObject.RemoveNestedField("metadata", "ownerReferences")	
 	}
-	// This result message will be displayed in the function evaluation time.
-	rl.Results = append(rl.Results, fn.GeneralResult("Add label tier=mysql to all `Deployment` resources", fn.Info))
-	return true, nil
+	
+	//This result message will be displayed in the function evaluation time.
+	rl.Results = append(rl.Results, fn.GeneralResult("Removed owner references", fn.Info))
+	return true,nil
 
 }
 
